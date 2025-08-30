@@ -23,6 +23,8 @@ model user{
  emailVerified  DateTime? 
  account account[]
  session session[]
+ message message[]
+ chat chat[]
 }
 model account {
   id                String  @id @default(uuid())
@@ -49,4 +51,28 @@ model session {
   userId       String
   expires      DateTime
   user user @relation(fields: [userId], references: [id])
+}
+model chat{
+    id           String   @id @default(uuid())
+    userId String
+
+    message message[]
+    user user @relation(fields: [userId], references: [id])
+
+}
+model message {
+    id           String   @id @default(uuid())
+    userId String
+    chatId String
+    role Role
+    parts Json
+    
+    user user @relation(fields: [userId], references: [id])
+
+    chat chat @relation(fields: [chatId], references: [id])
+}
+enum Role{
+  user
+  assistent
+  system
 }
