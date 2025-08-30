@@ -33,7 +33,7 @@ export default function RootLayout({
         <SessionWrapper>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navbar />
-            {children}
+            <main className="mt-20"> {children}</main>
           </ThemeProvider>
         </SessionWrapper>
       </body>
