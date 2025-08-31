@@ -1,5 +1,6 @@
 "use client";
 import ChatHistory from "@/components/chat-history";
+import HeroSection from "@/components/dashboard/hero-section";
 import { buttonVariants } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -19,6 +20,7 @@ const page = () => {
 
   return (
     <div>
+      <HeroSection />
       <ChatHistory />
     </div>
   );

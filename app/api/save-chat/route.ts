@@ -1,6 +1,5 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { Assistant } from "next/font/google";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -38,13 +37,7 @@ export async function POST(req: NextRequest) {
     },
   });
   if (!oldChat) {
-    oldChat = await prisma.chat.create({
-      data: {
-        id: chatId,
-        name: "random chat",
-        userId,
-      },
-    });
+    return NextResponse.json({ message: "create chat first" });
   }
   const msgUser = await prisma.message.create({
     data: {

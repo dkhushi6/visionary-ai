@@ -25,6 +25,7 @@ model user{
  session session[]
  message message[]
  chat chat[]
+ document document[]
 }
 model account {
   id                String  @id @default(uuid())
@@ -58,7 +59,7 @@ model chat{
     name String
     message message[]
     user user @relation(fields: [userId], references: [id])
-
+    document document[]
 }
 model message {
     id           String   @id @default(uuid())
@@ -75,4 +76,16 @@ enum Role{
   user
   assistant
   system
+}
+model document {
+    id        String                @id @default(dbgenerated("gen_random_uuid()"))
+    userId    String
+    chatId    String
+    chat chat @relation(fields: [chatId],references: [id])
+
+    user      user                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+    content   String?
+    embedding Unsupported("vector")
+    metadata  Json?
+    createdAt DateTime              @default(now())
 }

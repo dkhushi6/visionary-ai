@@ -1,5 +1,6 @@
 "use client";
 import ChatRoute from "@/components/chat";
+import UploadPage from "@/components/upload";
 import { UIMessage } from "ai";
 import axios from "axios";
 import { ObjectId } from "bson";
@@ -42,6 +43,8 @@ const page = () => {
   if (chatId) {
     return (
       <div>
+        <UploadPage chatId={chatId} />
+
         <ChatRoute chatId={chatId} oldChats={oldChats} />
       </div>
     );
