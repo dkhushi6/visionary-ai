@@ -6,7 +6,6 @@ const steps = [
     title: "Upload Document",
     desc: "Drag and drop your PDF or browse to select",
     icon: <Upload className="h-8 w-8" />,
-    bg: "bg-[#E9F2F8] dark:bg-[#6472ef34]",
     border: "border-[#414FC5]/40",
     shadow: "shadow-[0_4px_15px_0_rgba(65,79,197,0.3)]",
     hoverShadow: "hover:shadow-[0_8px_25px_0_rgba(65,79,197,0.5)]",
@@ -16,7 +15,6 @@ const steps = [
     title: "Choose Category",
     desc: "Select your domain for specialized analysis",
     icon: <FileText className="h-8 w-8" />,
-    bg: "bg-[#EAF4F3] dark:bg-[#38ace25c]",
     border: "border-[#1B91C7]/40",
     shadow: "shadow-[0_4px_15px_0_rgba(27,145,199,0.3)]",
     hoverShadow: "hover:shadow-[0_8px_25px_0_rgba(27,145,199,0.5)]",
@@ -26,7 +24,6 @@ const steps = [
     title: "Get Insights",
     desc: "Chat with AI and extract key information",
     icon: <MessageCircle className="h-8 w-8" />,
-    bg: "bg-[#FEEBC8] dark:bg-[#feebc822]",
     border: "border-[#D97706]/40",
     shadow: "shadow-[0_4px_15px_0_rgba(217,119,6,0.3)]",
     hoverShadow: "hover:shadow-[0_8px_25px_0_rgba(217,119,6,0.5)]",
@@ -52,11 +49,11 @@ const HowtoCards = () => {
           {steps.map((step, i) => (
             <div
               key={i}
-              className={`${baseCard} border ${step.border} ${step.shadow} ${step.hoverShadow} ${step.bg}`}
+              className={`${baseCard} border ${step.border} ${step.shadow} ${step.hoverShadow} `}
               style={{ animationDelay: `${i * 0.1}s` }}
             >
               <div
-                className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${step.bg} ${step.iconColor}`}
+                className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${step.iconColor}`}
               >
                 {step.icon}
               </div>
