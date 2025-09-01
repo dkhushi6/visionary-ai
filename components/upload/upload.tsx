@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Input } from "./ui/input";
+import { Input } from "../ui/input";
 import axios from "axios";
 
 const UploadPage = ({ chatId }: { chatId: string }) => {

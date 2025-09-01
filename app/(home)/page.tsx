@@ -1,6 +1,7 @@
 "use client";
 import ChatHistory from "@/components/chat-history";
 import { CategoriesCard } from "@/components/dashboard/categories-card";
+import GetStarted from "@/components/dashboard/get-started";
 import HeroSection from "@/components/dashboard/hero-section";
 import { HowtoCards } from "@/components/dashboard/how-to-cards";
 import { buttonVariants } from "@/components/ui/button";
@@ -25,6 +26,7 @@ const page = () => {
       <HeroSection />
       <HowtoCards />
       <CategoriesCard />
+      <GetStarted />
       <ChatHistory />
     </div>
   );

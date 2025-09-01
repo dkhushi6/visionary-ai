@@ -41,19 +41,33 @@ export default function ChatRoute({ chatId, oldChats }: ChatRouteProps) {
       console.log("messages from setmessages", messages);
     }
   }, [oldChats, setMessages]);
+
   return (
-    <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
-      {messages.map((message) => (
-        <div key={message.id} className="whitespace-pre-wrap">
-          {message.role === "user" ? "User: " : "AI: "}
-          {message.parts.map((part, i) => {
-            switch (part.type) {
-              case "text":
-                return <div key={`${message.id}-${i}`}>{part.text}</div>;
-            }
-          })}
-        </div>
-      ))}
+    <div className="flex flex-col w-full max-w-5xl py-24 mx-auto stretch">
+      <div className="flex flex-col space-y-5">
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className={`flex ${
+              message.role === "user" ? "justify-end" : "justify-start"
+            }`}
+          >
+            <div
+              className={`px-4 py-2 rounded-2xl max-w-[75%] whitespace-pre-wrap shadow ${
+                message.role === "user"
+                  ? "bg-blue-500 text-white rounded-br-none"
+                  : "bg-gray-200 dark:bg-zinc-800 text-black dark:text-white rounded-bl-none"
+              }`}
+            >
+              {message.parts.map((part, i) =>
+                part.type === "text" ? (
+                  <div key={`${message.id}-${i}`}>{part.text}</div>
+                ) : null
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
 
       <form
         onSubmit={(e) => {
@@ -63,7 +77,7 @@ export default function ChatRoute({ chatId, oldChats }: ChatRouteProps) {
         }}
       >
         <input
-          className="fixed dark:bg-zinc-900 bottom-0 w-full max-w-md p-2 mb-8 border border-zinc-300 dark:border-zinc-800 rounded shadow-xl"
+          className="fixed dark:bg-zinc-900 bottom-0 w-full max-w-5xl rounded-3xl py-3 px-4 mb-10 border border-zinc-300 dark:border-zinc-800  shadow-xl"
           value={input}
           placeholder="Say something..."
           onChange={(e) => setInput(e.currentTarget.value)}
