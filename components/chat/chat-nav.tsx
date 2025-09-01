@@ -4,7 +4,7 @@ import { Bot } from "lucide-react";
 
 const ChatNavbar = ({ userColor }: { userColor: string }) => {
   return (
-    <header className="w-full sticky top-0 z-50 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
+    <header className="w-full  top-0 z-50 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
       <div className="max-w-5xl mx-auto px-6 py-5 flex items-center gap-4">
         {/* Icon */}
         <div

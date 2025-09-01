@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Upload, FileText, CheckCircle } from "lucide-react";
+import { FileText } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -16,6 +15,7 @@ import {
 import ChatRoute from "./chat";
 import { UIMessage } from "ai";
 import axios from "axios";
+import { MotionFileUpload } from "./upload/file-upload";
 
 interface FileUploadSectionProps {
   chatId: string;
@@ -72,63 +72,13 @@ const FileUploadSection = ({ chatId, oldChats }: FileUploadSectionProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div
+      className="h-screen bg-background flex items-center"
+      style={{ height: "calc(100vh - 69px)" }}
+    >
       <div className="container mx-auto max-w-4xl">
-        {/* Header */}
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
-            Upload Your Document
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Choose your file and select the appropriate category for specialized
-            AI analysis
-          </p>
-        </div>
-
         <Card className="p-8 shadow-xl rounded-2xl border border-muted">
-          {/* File Upload */}
-          <div className="mb-8">
-            <Label
-              htmlFor="file-upload"
-              className="text-lg font-semibold mb-4 block"
-            >
-              Select PDF Document
-            </Label>
-
-            <Input
-              id="file-upload"
-              type="file"
-              accept=".pdf"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-            <label
-              htmlFor="file-upload"
-              className="flex flex-col items-center justify-center p-10 border-2 border-dashed border-muted-foreground/40 rounded-xl cursor-pointer hover:border-primary hover:bg-muted/30 transition-all text-center"
-            >
-              {selectedFile ? (
-                <div className="flex items-center space-x-4">
-                  <CheckCircle className="h-12 w-12 text-green-500" />
-                  <div className="text-left">
-                    <p className="text-lg font-medium">{selectedFile.name}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <Upload className="h-12 w-12 text-muted-foreground mb-4" />
-                  <p className="text-lg font-medium mb-2">
-                    Drop your PDF here or click to browse
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Supports files up to 50MB
-                  </p>
-                </>
-              )}
-            </label>
-          </div>
+          <MotionFileUpload onChange={(files) => setSelectedFile(files[0])} />
 
           {/* Category Selection */}
           <div className="mb-8">

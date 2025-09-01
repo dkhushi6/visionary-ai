@@ -123,7 +123,10 @@ const CategorySidebar = ({ category }: CategorySidebarProps) => {
   const content = getCategoryContent();
 
   return (
-    <div className="h-[100vh] p-6 bg-gradient-to-b from-white dark:from-neutral-900 shadow-xl overflow-y-auto">
+    <div
+      className="h-screen p-6 bg-gradient-to-b from-white dark:from-neutral-900 shadow-xl overflow-y-auto"
+      style={{ height: "calc(100vh - 69px)" }}
+    >
       {/* Header */}
       <div className="flex flex-col items-center text-center mb-10">
         <MovingButton

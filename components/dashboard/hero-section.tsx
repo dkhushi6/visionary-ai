@@ -5,7 +5,10 @@ import { WavyBackground } from "../ui/wavy-background";
 
 const HeroSection = () => {
   return (
-    <section className="hero-section relative h-[100vh] flex items-center py-20 px-4 overflow-hidden">
+    <section
+      className="h-screen relative  flex items-center py-20 px-4 overflow-hidden"
+      style={{ height: "calc(100vh - 69px)" }}
+    >
       {/* Text content */}
       <div className="container mx-auto text-center ">
         <div className="relative z-10">

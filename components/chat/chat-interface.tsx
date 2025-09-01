@@ -25,7 +25,7 @@ const ChatInterface = ({
   return (
     <div>
       <ChatNavbar userColor={userColor} />
-      <div className="flex flex-col w-full max-w-5xl py-24 mx-auto stretch">
+      <div className="flex flex-col w-full max-w-5xl py-8 mx-auto stretch">
         <div className="flex flex-col space-y-5">
           {messages.map((message) => (
             <div
@@ -63,7 +63,7 @@ const ChatInterface = ({
           }}
         >
           <input
-            className="fixed dark:bg-zinc-900 bottom-0 w-full max-w-5xl rounded-3xl py-3 px-4 mb-10 border border-zinc-300 dark:border-zinc-800  shadow-xl"
+            className="fixed dark:bg-zinc-900 bottom-0 w-full max-w-5xl rounded-3xl py-3 px-4 mb-10 border border-muted  shadow-xl"
             value={input}
             placeholder="Say something..."
             onChange={(e) => setInput(e.currentTarget.value)}
