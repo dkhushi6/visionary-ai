@@ -23,10 +23,10 @@ interface FileUploadSectionProps {
 }
 
 const categories = [
-  { value: "healthcare", label: "🩺 Healthcare" },
-  { value: "business", label: "📊 Business" },
-  { value: "legal", label: "⚖️ Legal" },
-  { value: "education", label: "📚 Education" },
+  { value: "healthcare", label: "Healthcare" },
+  { value: "business", label: "Business" },
+  { value: "legal", label: "Legal" },
+  { value: "education", label: "Education" },
 ];
 
 const FileUploadSection = ({ chatId, oldChats }: FileUploadSectionProps) => {
@@ -62,11 +62,17 @@ const FileUploadSection = ({ chatId, oldChats }: FileUploadSectionProps) => {
   };
 
   if (showChat) {
-    return <ChatRoute chatId={chatId} oldChats={oldChats} />;
+    return (
+      <ChatRoute
+        chatId={chatId}
+        oldChats={oldChats}
+        category={selectedCategory}
+      />
+    );
   }
 
   return (
-    <div className="min-h-screen bg-background p-4">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto max-w-4xl">
         {/* Header */}
         <div className="mb-8 text-center">

@@ -4,12 +4,18 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, UIMessage } from "ai";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { ChatInterface } from "./chat/chat-interface";
+import CategorySidebar from "./chat/category-sidebar";
 type ChatRouteProps = {
   oldChats: UIMessage[];
   chatId: string;
+  category: string;
 };
-export default function ChatRoute({ chatId, oldChats }: ChatRouteProps) {
-  const [input, setInput] = useState("");
+export default function ChatRoute({
+  chatId,
+  oldChats,
+  category,
+}: ChatRouteProps) {
   const { messages, sendMessage, setMessages } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/chat",
@@ -43,46 +49,17 @@ export default function ChatRoute({ chatId, oldChats }: ChatRouteProps) {
   }, [oldChats, setMessages]);
 
   return (
-    <div className="flex flex-col w-full max-w-5xl py-24 mx-auto stretch">
-      <div className="flex flex-col space-y-5">
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`flex ${
-              message.role === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
-            <div
-              className={`px-4 py-2 rounded-2xl max-w-[75%] whitespace-pre-wrap shadow ${
-                message.role === "user"
-                  ? "bg-blue-500 text-white rounded-br-none"
-                  : "bg-gray-200 dark:bg-zinc-800 text-black dark:text-white rounded-bl-none"
-              }`}
-            >
-              {message.parts.map((part, i) =>
-                part.type === "text" ? (
-                  <div key={`${message.id}-${i}`}>{part.text}</div>
-                ) : null
-              )}
-            </div>
-          </div>
-        ))}
+    <div className="flex ">
+      <div className="w-1/3 ">
+        <CategorySidebar category={category} />
       </div>
-
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          sendMessage({ text: input });
-          setInput("");
-        }}
-      >
-        <input
-          className="fixed dark:bg-zinc-900 bottom-0 w-full max-w-5xl rounded-3xl py-3 px-4 mb-10 border border-zinc-300 dark:border-zinc-800  shadow-xl"
-          value={input}
-          placeholder="Say something..."
-          onChange={(e) => setInput(e.currentTarget.value)}
+      <div className="w-2/3">
+        <ChatInterface
+          sendMessage={sendMessage}
+          messages={messages}
+          category={category}
         />
-      </form>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
-import ChatRoute from "@/components/chat";
-import UploadPage from "@/components/upload/upload";
-import FileUploadSection from "@/components/upload/uploadDashboard";
+
+import FileUploadSection from "@/components/uploadDashboard";
 import { UIMessage } from "ai";
 import axios from "axios";
 import { ObjectId } from "bson";
