@@ -61,6 +61,9 @@ model chat{
     user user @relation(fields: [userId], references: [id])
     document document[]
     category Category
+    updatedAt DateTime @updatedAt
+    createdAt DateTime              @default(now())
+
 }
 enum Category{
   healthcare
@@ -76,7 +79,8 @@ model message {
     parts Json
     
     user user @relation(fields: [userId], references: [id])
-
+    createdAt DateTime              @default(now())
+    updatedAt DateTime @updatedAt
     chat chat @relation(fields: [chatId], references: [id])
 }
 enum Role{

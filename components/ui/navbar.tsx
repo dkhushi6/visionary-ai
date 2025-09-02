@@ -26,14 +26,6 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex items-center gap-2">
-        <div>
-          <Link
-            href="/chat/new"
-            className={buttonVariants({ variant: "outline" })}
-          >
-            New Chat
-          </Link>
-        </div>
         <ThemeSwitcher />
         <div>
           {session?.user?.id ? (

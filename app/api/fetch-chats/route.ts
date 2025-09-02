@@ -18,23 +18,79 @@ export async function POST(req: NextRequest) {
   const messages = await prisma.message.findMany({
     where: { chatId, userId },
   });
-
-  if (!messages) {
-    return NextResponse.json({ message: "chat not found" });
+  const category = await prisma.chat.findFirst({
+    where: {
+      id: chatId,
+      userId,
+    },
+    select: {
+      category: true,
+    },
+  });
+  if (!category) {
+    return NextResponse.json({ message: "category not found from db" });
   }
-  return NextResponse.json({ message: "chat found successfully!", messages });
+  if (!messages) {
+    return NextResponse.json({ message: "chat not found from db" });
+  }
+  return NextResponse.json({
+    message: "chat found successfully!",
+    messages,
+    category,
+  });
 }
 
+// export async function GET(req: NextRequest) {
+//   const session = await auth();
+//   if (!session?.user?.id) {
+//     return NextResponse.json({ message: "login first" });
+//   }
+//   const userId = session.user.id;
+
+//   const oldChats = await prisma.chat.findMany({ where: { userId } });
+//   if (!oldChats) {
+//     return NextResponse.json({ message: "chat not found" });
+//   }
+//   return NextResponse.json({ message: "chat found successfully!", oldChats });
+// }
 export async function GET(req: NextRequest) {
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ message: "login first" });
   }
+
   const userId = session.user.id;
 
-  const oldChats = await prisma.chat.findMany({ where: { userId } });
-  if (!oldChats) {
-    return NextResponse.json({ message: "chat not found" });
+  const oldChats = await prisma.chat.findMany({
+    where: { userId },
+    include: {
+      document: {
+        select: {
+          id: true,
+          content: true,
+          metadata: true,
+          createdAt: true,
+        },
+      },
+      message: {
+        orderBy: { createdAt: "desc" },
+        take: 1, // only latest message
+        select: {
+          id: true,
+          role: true,
+          parts: true,
+        },
+      },
+    },
+    orderBy: { updatedAt: "desc" }, // newest chats first
+  });
+
+  if (!oldChats || oldChats.length === 0) {
+    return NextResponse.json({ message: "no chats found" });
   }
-  return NextResponse.json({ message: "chat found successfully!", oldChats });
+
+  return NextResponse.json({
+    message: "chat found successfully!",
+    oldChats,
+  });
 }

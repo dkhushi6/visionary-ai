@@ -12,11 +12,12 @@ const page = () => {
   const { data: session } = useSession();
   if (!session?.user?.id) {
     return (
-      <div className="flex-1 self-center justify-center items-center flex flex-col ">
-        <p>login first </p>{" "}
-        <Link href="/login" className={buttonVariants({ variant: "outline" })}>
-          Login
-        </Link>
+      <div>
+        {" "}
+        <HeroSection />
+        <HowtoCards />
+        <CategoriesCard />
+        <GetStarted />
       </div>
     );
   }
@@ -24,10 +25,10 @@ const page = () => {
   return (
     <div>
       <HeroSection />
+      <ChatHistory />
       <HowtoCards />
       <CategoriesCard />
       <GetStarted />
-      <ChatHistory />
     </div>
   );
 };

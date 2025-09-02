@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 
 const page = () => {
   const [oldChats, setOldChats] = useState<UIMessage[]>([]);
+  const [category, setCategory] = useState("");
 
   const [chatId, setChatId] = useState("");
   const { data: session } = useSession();
@@ -30,7 +31,8 @@ const page = () => {
   }, [id]);
   const handleReload = async ({ id }: { id: string }) => {
     const res = await axios.post("/api/fetch-chats", { chatId: id });
-    console.log("current chat messages:", res.data.messages);
+    console.log("current chat category:", res.data.category);
+    setCategory(res.data.category.category);
     setOldChats(res.data.messages);
   };
   useEffect(() => {
@@ -42,9 +44,11 @@ const page = () => {
     return <p>Loading...</p>;
   }
   if (chatId) {
-    // if (oldChats.length > 0) {
-    //   return <ChatRoute chatId={chatId} oldChats={oldChats} />;
-    // }
+    if (category) {
+      return (
+        <ChatRoute chatId={chatId} oldChats={oldChats} category={category} />
+      );
+    }
     return (
       <div>
         <FileUploadSection chatId={chatId} oldChats={oldChats} />

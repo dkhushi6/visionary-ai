@@ -44,6 +44,8 @@ export default function ChatRoute({
     }
     if (oldChats.length > 0) {
       console.log("oldchats from chatInterface:", oldChats);
+      console.log("oldchats from category:", category);
+
       setMessages(oldChats);
       console.log("messages from setmessages", messages);
     }
