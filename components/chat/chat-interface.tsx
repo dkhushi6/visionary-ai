@@ -2,6 +2,7 @@
 import { UIMessage } from "ai";
 import React, { useState } from "react";
 import ChatNavbar from "./chat-nav";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 type ChatInterfaceProps = {
   messages: UIMessage[];
   sendMessage: (message: { text: string }) => void;
@@ -26,34 +27,36 @@ const ChatInterface = ({
     <div>
       <ChatNavbar userColor={userColor} />
       <div className="flex flex-col w-full max-w-5xl py-8 mx-auto stretch">
-        <div className="flex flex-col space-y-5">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${
-                message.role === "user" ? "justify-end" : "justify-start"
-              }`}
-            >
+        <ScrollArea className="flex-1 w-full max-w-5xl h-[600px] mx-auto px-4 py-6">
+          <div className="flex flex-col space-y-5">
+            {messages.map((message) => (
               <div
-                className={`px-4 py-2 rounded-2xl max-w-[75%] whitespace-pre-wrap shadow ${
-                  message.role === "user"
-                    ? `text-white rounded-br-none`
-                    : "bg-gray-200 dark:bg-zinc-800 text-black dark:text-white rounded-bl-none"
+                key={message.id}
+                className={`flex ${
+                  message.role === "user" ? "justify-end" : "justify-start"
                 }`}
-                style={{
-                  backgroundColor:
-                    message.role === "user" ? userColor + "cc" : undefined,
-                }}
               >
-                {message.parts.map((part, i) =>
-                  part.type === "text" ? (
-                    <div key={`${message.id}-${i}`}>{part.text}</div>
-                  ) : null
-                )}
+                <div
+                  className={`px-4 py-2 rounded-2xl max-w-[75%] whitespace-pre-wrap shadow ${
+                    message.role === "user"
+                      ? `text-white rounded-br-none`
+                      : "bg-gray-200 dark:bg-zinc-800 text-black dark:text-white rounded-bl-none"
+                  }`}
+                  style={{
+                    backgroundColor:
+                      message.role === "user" ? userColor + "cc" : undefined,
+                  }}
+                >
+                  {message.parts.map((part, i) =>
+                    part.type === "text" ? (
+                      <div key={`${message.id}-${i}`}>{part.text}</div>
+                    ) : null
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </ScrollArea>
 
         <form
           onSubmit={(e) => {

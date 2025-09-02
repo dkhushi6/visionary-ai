@@ -5,6 +5,7 @@ import { OpenAIEmbeddings } from "@langchain/openai";
 import pool from "@/lib/pool";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Category } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
   const session = await auth();
@@ -15,6 +16,7 @@ export async function POST(req: NextRequest) {
   const formData = await req.formData();
   const file = formData.get("file") as File;
   const chatId = formData.get("chatId") as string | null;
+  const category = formData.get("category") as Category;
 
   if (!file) {
     return NextResponse.json({
@@ -24,6 +26,11 @@ export async function POST(req: NextRequest) {
   if (!chatId) {
     return NextResponse.json({
       message: "chatId not extracted from from formData error",
+    });
+  }
+  if (!category) {
+    return NextResponse.json({
+      message: "category not extracted from from formData error",
     });
   }
   console.log("ChatId form upload", chatId);
@@ -40,6 +47,7 @@ export async function POST(req: NextRequest) {
         id: chatId,
         name: "random chat",
         userId,
+        category,
       },
     });
   }

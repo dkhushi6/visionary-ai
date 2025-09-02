@@ -26,26 +26,25 @@ const secondaryVariant = {
 };
 
 export const MotionFileUpload = ({
-  onChange,
+  handleFileChange,
 }: {
-  onChange?: (files: File[]) => void;
+  handleFileChange: (files: File[]) => void;
 }) => {
   const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (newFiles: File[]) => {
-    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-    onChange && onChange(newFiles);
-  };
-
   const handleClick = () => {
     fileInputRef.current?.click();
+  };
+  const handleSetFileChange = (newFiles: File[]) => {
+    setFiles((prev) => [...prev, ...newFiles]);
+    handleFileChange(newFiles);
   };
 
   const { getRootProps, isDragActive } = useDropzone({
     multiple: false,
     noClick: true,
-    onDrop: handleFileChange,
+    onDrop: handleSetFileChange,
     onDropRejected: (error) => {
       console.log(error);
     },
@@ -63,7 +62,9 @@ export const MotionFileUpload = ({
           id="file-upload-handle"
           type="file"
           accept=".pdf"
-          onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
+          onChange={(e) =>
+            handleSetFileChange(Array.from(e.target.files || []))
+          }
           className="hidden"
         />
         <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]">
@@ -84,11 +85,11 @@ export const MotionFileUpload = ({
                   key={"file" + idx}
                   layoutId={idx === 0 ? "file-upload" : "file-upload-" + idx}
                   className={cn(
-                    "relative overflow-hidden z-40 bg-white dark:bg-neutral-900 flex flex-col items-start justify-start md:h-24 p-4 mt-4 w-full mx-auto rounded-md",
+                    "relative overflow-hidden z-40 bg-white dark:bg-neutral-900 flex flex-col items-start justify-start md:h-24 p-4 mt-4 w-full mx-auto rounded-md border border-green-500",
                     "shadow-sm"
                   )}
                 >
-                  <div className="flex justify-between w-full items-center gap-4">
+                  <div className="flex justify-between w-full items-center gap-4 ">
                     <motion.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}

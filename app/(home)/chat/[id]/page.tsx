@@ -1,5 +1,6 @@
 "use client";
 
+import ChatRoute from "@/components/chat";
 import FileUploadSection from "@/components/uploadDashboard";
 import { UIMessage } from "ai";
 import axios from "axios";
@@ -41,6 +42,9 @@ const page = () => {
     return <p>Loading...</p>;
   }
   if (chatId) {
+    // if (oldChats.length > 0) {
+    //   return <ChatRoute chatId={chatId} oldChats={oldChats} />;
+    // }
     return (
       <div>
         <FileUploadSection chatId={chatId} oldChats={oldChats} />
