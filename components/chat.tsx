@@ -55,7 +55,7 @@ export default function ChatRoute({
   return (
     <div className="flex ">
       <div className="w-1/3 ">
-        <CategorySidebar category={category} />
+        <CategorySidebar category={category} chatId={chatId} />
       </div>
       <div className="w-2/3">
         <ChatInterface

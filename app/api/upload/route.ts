@@ -96,6 +96,5 @@ export async function POST(req: NextRequest) {
   console.log("sideBar data saved in db");
   return NextResponse.json({
     message: "Process complete successfully",
-    sidebarData,
   });
 }
