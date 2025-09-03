@@ -6,6 +6,7 @@ import pool from "@/lib/pool";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Category } from "@prisma/client";
+import { sideBarDataExtraction } from "./sidebar-data-extraction";
 
 export async function POST(req: NextRequest) {
   const session = await auth();
@@ -85,5 +86,6 @@ export async function POST(req: NextRequest) {
       ]);
     })
   );
+  sideBarDataExtraction({ category, text: text.join(" ") });
   return NextResponse.json({ message: "Process complete successfully" });
 }
