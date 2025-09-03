@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { Category } from "@prisma/client";
 type ChatNavbarProps = {
   userColor: string;
-  category: Category;
+  category: Category | null;
 };
 const ChatNavbar = ({ userColor, category }: ChatNavbarProps) => {
   const wittyLines: Record<string, string> = {

@@ -26,6 +26,7 @@ model user{
  message message[]
  chat chat[]
  document document[]
+ extractedData extractedData[]
 }
 model account {
   id                String  @id @default(uuid())
@@ -63,7 +64,7 @@ model chat{
     category Category
     updatedAt DateTime @updatedAt
     createdAt DateTime              @default(now())
-
+    extractedData extractedData[]
 }
 enum Category{
   healthcare
@@ -80,7 +81,6 @@ model message {
     
     user user @relation(fields: [userId], references: [id])
     createdAt DateTime              @default(now())
-    updatedAt DateTime @updatedAt
     chat chat @relation(fields: [chatId], references: [id])
 }
 enum Role{
@@ -100,3 +100,16 @@ model document {
     metadata  Json?
     createdAt DateTime              @default(now())
 }
+model extractedData{
+    id           String   @id @default(uuid())
+    category     Category
+    userId    String
+  chatId    String
+  createdAt DateTime              @default(now())
+   data      Json
+
+  user user @relation(fields: [userId], references: [id])
+  chat chat @relation(fields: [chatId], references: [id])
+
+}
+

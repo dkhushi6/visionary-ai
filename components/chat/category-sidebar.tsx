@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import React, { useEffect } from "react";
 import { MovingButton } from "../ui/moving-border";
 import { categoryConfig } from "./sidebar/category-config";
+import { Category } from "@prisma/client";
 
 // 🎨 Styles for warning/error/default item types (lighter palette)
 const itemStyles: Record<string, string> = {
@@ -16,11 +17,11 @@ const itemStyles: Record<string, string> = {
 };
 
 type CategorySidebarProps = {
-  category: string;
+  category: Category | null;
 };
 
 const CategorySidebar = ({ category }: CategorySidebarProps) => {
-  const content = categoryConfig[category] || categoryConfig.default;
+  const content = categoryConfig[category!] || categoryConfig.default;
   const Icon = content.icon;
 
   useEffect(() => {

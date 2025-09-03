@@ -1,32 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { FileText } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import ChatRoute from "./chat";
 import { UIMessage } from "ai";
 import axios from "axios";
 import { MotionFileUpload } from "./upload/file-upload";
 import AnalysisButton from "./upload/analysis";
 import CategorySelection from "./upload/category-selection";
+import { Category } from "@prisma/client";
 
 interface FileUploadSectionProps {
   chatId: string;
   oldChats: UIMessage[];
 }
+interface CategorySelectionProps {
+  selectedCategory: Category | null;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<Category | null>>;
+}
 
 const FileUploadSection = ({ chatId, oldChats }: FileUploadSectionProps) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null
+  );
+
   const [isUploading, setIsUploading] = useState(false);
   const [showChat, setShowChat] = useState(false);
 
@@ -46,10 +45,10 @@ const FileUploadSection = ({ chatId, oldChats }: FileUploadSectionProps) => {
     const formData = new FormData();
     formData.append("file", selectedFile);
     formData.append("chatId", chatId);
-    formData.append("category", selectedCategory);
+    formData.append("category", selectedCategory.toString()); // ✅ FIX
 
     const res = await axios.post("/api/upload", formData);
-    console.log(res.data);
+    console.log(res.data.sidebarData);
 
     setIsUploading(false);
     setShowChat(true);
@@ -60,7 +59,7 @@ const FileUploadSection = ({ chatId, oldChats }: FileUploadSectionProps) => {
       <ChatRoute
         chatId={chatId}
         oldChats={oldChats}
-        category={selectedCategory}
+        category={selectedCategory!}
       />
     );
   }
@@ -76,13 +75,13 @@ const FileUploadSection = ({ chatId, oldChats }: FileUploadSectionProps) => {
           <MotionFileUpload handleFileChange={handleFileChange} />
           {/* Category Selection */}
           <CategorySelection
-            selectedCategory={selectedCategory}
+            selectedCategory={selectedCategory!}
             setSelectedCategory={setSelectedCategory}
           />{" "}
           {/* Upload Button */}
           <AnalysisButton
             handleUpload={handleUpload}
-            selectedCategory={selectedCategory}
+            selectedCategory={selectedCategory!}
             isUploading={isUploading}
             selectedFile={selectedFile}
           />

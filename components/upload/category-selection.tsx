@@ -6,11 +6,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Category } from "@prisma/client";
 import React from "react";
-type CategorySelectionProps = {
-  selectedCategory: string;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-};
+interface CategorySelectionProps {
+  selectedCategory: Category | null;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<Category | null>>;
+}
 const categories = [
   { value: "healthcare", label: "Healthcare" },
   { value: "business", label: "Business" },
@@ -27,7 +28,10 @@ const CategorySelection = ({
         Choose Category
       </Label>
 
-      <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+      <Select
+        value={selectedCategory ?? undefined}
+        onValueChange={(val) => setSelectedCategory(val as Category)}
+      >
         <SelectTrigger className="w-full h-14 text-lg rounded-xl">
           <SelectValue placeholder="Select the document category" />
         </SelectTrigger>

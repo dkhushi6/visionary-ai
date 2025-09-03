@@ -86,6 +86,16 @@ export async function POST(req: NextRequest) {
       ]);
     })
   );
-  sideBarDataExtraction({ category, text: text.join(" ") });
-  return NextResponse.json({ message: "Process complete successfully" });
+  const sidebarData = await sideBarDataExtraction({
+    category,
+    text: text.join(" "),
+  });
+  await prisma.extractedData.create({
+    data: { userId, chatId, category, data: sidebarData },
+  });
+  console.log("sideBar data saved in db");
+  return NextResponse.json({
+    message: "Process complete successfully",
+    sidebarData,
+  });
 }

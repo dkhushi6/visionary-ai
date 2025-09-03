@@ -7,7 +7,7 @@ import { Category } from "@prisma/client";
 type ChatInterfaceProps = {
   messages: UIMessage[];
   sendMessage: (message: { text: string }) => void;
-  category: Category;
+  category: Category | null;
 };
 const categoryColors: Record<string, string> = {
   healthcare: "#FCA5A5", // Light Red (Tailwind red-300)
@@ -22,7 +22,7 @@ const ChatInterface = ({
   category,
 }: ChatInterfaceProps) => {
   const [input, setInput] = useState("");
-  const userColor = categoryColors[category] || "#0EA5E9";
+  const userColor = categoryColors[category!] || "#0EA5E9";
 
   return (
     <div>

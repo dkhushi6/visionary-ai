@@ -6,10 +6,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ChatInterface } from "./chat/chat-interface";
 import CategorySidebar from "./chat/category-sidebar";
+import { Category } from "@prisma/client";
 type ChatRouteProps = {
   oldChats: UIMessage[];
   chatId: string;
-  category: string;
+  category: Category;
 };
 export default function ChatRoute({
   chatId,
