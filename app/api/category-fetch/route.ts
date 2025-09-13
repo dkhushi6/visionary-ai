@@ -5,22 +5,37 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   const session = await auth();
   if (!session?.user?.id) {
-    return NextResponse.json({ message: "login first" });
+    return NextResponse.json({ message: "login first" }, { status: 401 });
   }
+
   const userId = session.user.id;
   const body = await req.json();
   const { chatId, category } = body;
+
   if (!chatId || !category) {
-    return NextResponse.json({ message: "chatId or category not found" });
+    return NextResponse.json(
+      { message: "chatId or category not found" },
+      { status: 400 }
+    );
   }
+
   const sidebarData = await prisma.extractedData.findFirst({
     where: { chatId, userId, category },
   });
+
   if (!sidebarData) {
-    return NextResponse.json({ message: " sidebarData not found" });
+    return NextResponse.json(
+      { message: "sidebarData not found" },
+      { status: 404 }
+    );
   }
+
   return NextResponse.json({
     sidebarData,
     message: "sidebarData fetched successfully",
   });
+}
+
+export async function GET() {
+  return NextResponse.json({ message: "category-fetch endpoint" });
 }
