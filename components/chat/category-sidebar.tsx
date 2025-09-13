@@ -1,8 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { AlertTriangle } from "lucide-react";
-import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import { categoryConfig } from "./sidebar/category-config";
 import { Category } from "@prisma/client";
@@ -12,23 +9,17 @@ import { RenderBusiness } from "./sidebar/render-category/business";
 import { RenderLegal } from "./sidebar/render-category/legal";
 import { RenderEducation } from "./sidebar/render-category/education";
 
-const itemStyles: Record<string, string> = {
-  warning:
-    "bg-yellow-50 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400",
-  error: "bg-red-50 text-red-800 dark:bg-red-900/30 dark:text-red-400",
-  default: "bg-gray-50 text-gray-800 dark:bg-neutral-800 dark:text-neutral-300",
-};
-
 type CategorySidebarProps = {
   category: Category | null;
   chatId: string;
 };
+type SidebarData = Record<string, unknown>;
 
 const CategorySidebar = ({ category, chatId }: CategorySidebarProps) => {
   const content = categoryConfig[category!] || categoryConfig.default;
   const Icon = content.icon;
 
-  const [sidebarData, setSidebarData] = useState<any>(null);
+  const [sidebarData, setSidebarData] = useState<SidebarData | null>(null);
 
   useEffect(() => {
     const fetchSideBarData = async () => {

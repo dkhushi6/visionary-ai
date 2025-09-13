@@ -13,7 +13,7 @@ import { Button, buttonVariants } from "./button";
 import { Cable } from "lucide-react";
 
 const Navbar = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   return (
     <div className="supports-backdrop-blur:bg-background/60 fixed left-0 right-0 top-0 z-20 border-b bg-background/95 backdrop-blur w-full flex py-2.5 px-5 justify-between">
       <div>

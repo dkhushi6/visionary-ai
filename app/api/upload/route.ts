@@ -16,6 +16,8 @@ export async function POST(req: NextRequest) {
   const userId = session.user.id;
   const formData = await req.formData();
   const file = formData.get("file") as File;
+  const fileName = file.name;
+
   const chatId = formData.get("chatId") as string | null;
   const category = formData.get("category") as Category;
 
@@ -76,13 +78,14 @@ export async function POST(req: NextRequest) {
   await Promise.all(
     chunk.map(async (doc, i) => {
       const embedding = embeddings[i];
-      const query = ` INSERT INTO "document" ("userId","content" , "metadata","embedding","chatId" , "createdAt") VALUES($1,$2,$3::jsonb,$4::vector,$5,now())`;
+      const query = ` INSERT INTO "document" ("userId","content" , "metadata","embedding","chatId","title" , "createdAt") VALUES($1,$2,$3::jsonb,$4::vector,$5,$6,now())`;
       await pool.query(query, [
         userId,
         doc.pageContent,
         JSON.stringify(doc.metadata),
         JSON.stringify(embedding),
         chatId,
+        fileName,
       ]);
     })
   );

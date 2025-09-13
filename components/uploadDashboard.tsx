@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 
 import ChatRoute from "./chat";
-import { UIMessage } from "ai";
 import axios from "axios";
 import { MotionFileUpload } from "./upload/file-upload";
 import AnalysisButton from "./upload/analysis";
@@ -13,14 +12,9 @@ import { Category } from "@prisma/client";
 
 interface FileUploadSectionProps {
   chatId: string;
-  oldChats: UIMessage[];
-}
-interface CategorySelectionProps {
-  selectedCategory: Category | null;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<Category | null>>;
 }
 
-const FileUploadSection = ({ chatId, oldChats }: FileUploadSectionProps) => {
+const FileUploadSection = ({ chatId }: FileUploadSectionProps) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
@@ -55,13 +49,7 @@ const FileUploadSection = ({ chatId, oldChats }: FileUploadSectionProps) => {
   };
 
   if (showChat) {
-    return (
-      <ChatRoute
-        chatId={chatId}
-        oldChats={oldChats}
-        category={selectedCategory!}
-      />
-    );
+    return <ChatRoute chatId={chatId} category={selectedCategory!} />;
   }
 
   return (

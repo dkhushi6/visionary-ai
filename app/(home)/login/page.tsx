@@ -1,15 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import React, { useEffect } from "react";
+import React from "react";
 import gg from "@/public/google.png";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 
 const page = () => {
-  useEffect(() => {
-    console.log("GOOGLE_CLIENT_ID", process.env.GOOGLE_CLIENT_ID);
-    console.log("NEXTAUTH_URL", process.env.NEXTAUTH_URL);
-  });
   return (
     <div className=" flex justify-center items-center h-screen ">
       <div className=" border rounded-lg flex px-5 py-8">

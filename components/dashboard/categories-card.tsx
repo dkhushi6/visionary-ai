@@ -56,7 +56,7 @@ const CategoriesCard = () => {
             Built for Every Industry
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Specialized AI solutions tailored to your field's unique needs
+            Specialized AI solutions tailored to your field{"'"}s unique needs
           </p>
         </div>
 

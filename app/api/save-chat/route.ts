@@ -10,15 +10,14 @@ export async function POST(req: NextRequest) {
   const userId = session.user.id;
   const body = await req.json();
   const { messages, chatId } = body;
-  console.log("messages", messages);
   if (!messages || !chatId) {
     return NextResponse.json({ message: "Message or userId not found" });
   }
   const lastMsg = messages[messages.length - 1];
   const prevMsg = messages[messages.length - 2];
 
-  let assistantMsg: any = null;
-  let userMsg: any = null;
+  let assistantMsg = null;
+  let userMsg = null;
 
   if (lastMsg?.role === "assistant") {
     assistantMsg = lastMsg;
@@ -29,7 +28,7 @@ export async function POST(req: NextRequest) {
   console.log("AssistentMsg", assistantMsg);
   console.log("UserMsg", userMsg);
 
-  let oldChat = await prisma.chat.findFirst({
+  const oldChat = await prisma.chat.findFirst({
     where: {
       id: chatId,
 

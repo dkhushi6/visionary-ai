@@ -1,24 +1,24 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, ElementType } from "react";
 import {
   motion,
   useAnimationFrame,
   useMotionTemplate,
   useMotionValue,
   useTransform,
-} from "motion/react";
+} from "framer-motion";
 import { cn } from "@/lib/utils";
 
-interface MovingButtonProps {
+interface MovingButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   borderRadius?: string;
   children: React.ReactNode;
-  as?: any;
+  as?: ElementType;
   containerClassName?: string;
   borderClassName?: string;
   duration?: number;
   className?: string;
-  borderColor?: string; // new prop
-  [key: string]: any;
+  borderColor?: string;
 }
 
 export function MovingButton({
@@ -29,7 +29,7 @@ export function MovingButton({
   borderClassName,
   duration,
   className,
-  borderColor = "#0EA5E9", // default color
+  borderColor = "#0EA5E9",
   ...otherProps
 }: MovingButtonProps) {
   return (
@@ -84,7 +84,6 @@ interface MovingBorderProps {
   rx?: string;
   ry?: string;
   borderColor?: string;
-  [key: string]: any;
 }
 
 export const MovingBorder = ({

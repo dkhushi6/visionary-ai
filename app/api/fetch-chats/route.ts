@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
 //   }
 //   return NextResponse.json({ message: "chat found successfully!", oldChats });
 // }
-export async function GET(req: NextRequest) {
+export async function GET() {
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ message: "login first" });
@@ -66,19 +66,9 @@ export async function GET(req: NextRequest) {
     include: {
       document: {
         select: {
+          title: true,
           id: true,
-          content: true,
-          metadata: true,
           createdAt: true,
-        },
-      },
-      message: {
-        orderBy: { createdAt: "desc" },
-        take: 1, // only latest message
-        select: {
-          id: true,
-          role: true,
-          parts: true,
         },
       },
     },

@@ -93,7 +93,7 @@ model document {
     userId    String
     chatId    String
     chat chat @relation(fields: [chatId],references: [id])
-
+    title String
     user      user                  @relation(fields: [userId], references: [id], onDelete: Cascade)
     content   String?
     embedding Unsupported("vector")

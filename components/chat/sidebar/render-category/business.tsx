@@ -11,7 +11,8 @@ export const RenderBusiness = ({
 }: {
   sidebarData: BusinessData;
 }) => {
-  const hasItems = (arr?: any[]) => arr && arr.length > 0;
+  const hasItems = <T,>(arr?: T[]): arr is T[] =>
+    Array.isArray(arr) && arr.length > 0;
 
   return (
     <div className="space-y-6">

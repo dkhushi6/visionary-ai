@@ -2,7 +2,6 @@
 import { UIMessage } from "ai";
 import React, { useState } from "react";
 import ChatNavbar from "./chat-nav";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Category } from "@prisma/client";
 type ChatInterfaceProps = {
   messages: UIMessage[];

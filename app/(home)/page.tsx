@@ -4,11 +4,9 @@ import { CategoriesCard } from "@/components/dashboard/categories-card";
 import GetStarted from "@/components/dashboard/get-started";
 import HeroSection from "@/components/dashboard/hero-section";
 import { HowtoCards } from "@/components/dashboard/how-to-cards";
-import { buttonVariants } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 
-const page = () => {
+const Page = () => {
   const { data: session } = useSession();
   if (!session?.user?.id) {
     return (
@@ -33,4 +31,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

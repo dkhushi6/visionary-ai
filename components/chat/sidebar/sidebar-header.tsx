@@ -1,11 +1,18 @@
 import { Category } from "@prisma/client";
-
 import React from "react";
+
 type HeaderSideBarProps = {
   category: Category | null;
-  content: 
+  content: {
+    title: string;
+    gradient: string;
+    icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  };
 };
-const SidebarHeader = ({ category }: HeaderSideBarProps) => {
+
+const SidebarHeader = ({ category, content }: HeaderSideBarProps) => {
+  const Icon = content.icon;
+
   return (
     <div className="flex flex-col items-center text-center mb-10">
       <div
