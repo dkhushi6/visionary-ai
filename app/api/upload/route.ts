@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
-import { OpenAIEmbeddings } from "@langchain/openai";
 import pool from "@/lib/pool";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Category } from "@prisma/client";
 import { sideBarDataExtraction } from "./sidebar-data-extraction";
-
+import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 export async function POST(req: NextRequest) {
   const session = await auth();
   if (!session?.user?.id) {
@@ -71,8 +70,8 @@ export async function POST(req: NextRequest) {
   const chunk = await splitter.createDocuments([texts]);
   const text = chunk.map((doc) => doc.pageContent);
   //embedding
-  const embeddings = await new OpenAIEmbeddings({
-    apiKey: process.env.OPENAI_API_KEY,
+  const embeddings = await new GoogleGenerativeAIEmbeddings({
+    model: "text-embedding-004",
   }).embedDocuments(text);
   //push in the db
   await Promise.all(

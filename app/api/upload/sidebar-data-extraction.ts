@@ -6,7 +6,7 @@ import { BusinessSchema } from "@/lib/sidebar-extraction-schema/business";
 import { EducationSchema } from "@/lib/sidebar-extraction-schema/education";
 import { HealthcareSchema } from "@/lib/sidebar-extraction-schema/healthcare";
 import { LegalSchema } from "@/lib/sidebar-extraction-schema/legal";
-import { openai } from "@ai-sdk/openai";
+import { google } from "@ai-sdk/google";
 import { Category } from "@prisma/client";
 import { generateObject } from "ai";
 
@@ -37,7 +37,7 @@ export const sideBarDataExtraction = async ({
   const schemaPrompt = extractionPrompt[category];
 
   const { object } = await generateObject({
-    model: openai("gpt-4o-mini"),
+    model: google("gemini-1.5-flash"),
     schema: schemaCat,
     prompt: `${schemaPrompt}\n\nInput text:\n${text}`,
   });

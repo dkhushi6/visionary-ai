@@ -1,9 +1,9 @@
-import { openai } from "@ai-sdk/openai";
 import { streamText, UIMessage, convertToModelMessages } from "ai";
-import { OpenAIEmbeddings } from "@langchain/openai";
+import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import pool from "@/lib/pool";
 import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
+import { google } from "@ai-sdk/google";
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -25,8 +25,8 @@ export async function POST(req: Request) {
   if (lastMsg?.parts[0].type === "text" && "text" in lastMsg.parts[0]) {
     prompt = lastMsg.parts[0].text;
   }
-  const embeddings = await new OpenAIEmbeddings({
-    apiKey: process.env.OPENAI_API_KEY,
+  const embeddings = await new GoogleGenerativeAIEmbeddings({
+    model: "text-embedding-004",
   }).embedQuery(prompt);
   const joinEmbed = `[${embeddings.join(",")}]`;
 
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
   const modelMessages = convertToModelMessages(messages);
 
   const result = streamText({
-    model: openai("gpt-4o"),
+    model: google("gemini-1.5-flash"),
     messages: modelMessages,
     system: `You are an expert assistant. Use the following context to answer the user's question as clearly and concisely as possible.
 
